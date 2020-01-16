@@ -49,6 +49,7 @@ class Podcast
       self = this
       feedResult = @feed.fetch()
       feedResult.promise.done (episodes) ->
+        console.log(feedResult)
         self.episodes = feedResult.episodes
       feedResult.promise
     else

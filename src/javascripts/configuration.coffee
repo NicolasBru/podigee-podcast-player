@@ -67,7 +67,7 @@ class Configuration
     )
 
   setConfigurations: (viaJSON) =>
-    return unless @configuration.episode
+    # return unless @configuration.episode
     @app.podcast = new Podcast(@app, @configuration.podcast || {})
 
     @app.extensionOptions = @configuration.extensions || {}
@@ -89,7 +89,11 @@ class Configuration
     else
       @app.podcast.getEpisodes().done =>
         if @app.podcast.episodes
-          @configuration.episode = @app.podcast.episodes[0]
+          # @configuration.episode = @app.podcast.episodes[0]
+          if @configuration.playerOptions?.first == 'earliest'
+            @configuration.episode = @app.podcast.episodes[@app.podcast.episodes.length - 1]
+          else
+            @configuration.episode = @app.podcast.episodes[0]
           @setConfigurations(viaJSON)
       return
 

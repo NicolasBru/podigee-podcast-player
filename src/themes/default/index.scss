@@ -1,7 +1,10 @@
 @import 'variables';
 
 .podcast-player {
-  &, *, *:before, *:after {
+  &,
+  *,
+  *:before,
+  *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -121,7 +124,7 @@
       position: absolute;
       text-align: left;
       top: 69px;
-      width: 70px;
+      // width: 70px;
     }
 
     .progress-bar-time-played:hover {
@@ -162,11 +165,11 @@
       animation: move 2s linear infinite;
       background-image: linear-gradient(
         -45deg,
-        rgba(255, 255, 255, .2) 25%,
+        rgba(255, 255, 255, 0.2) 25%,
         transparent 25%,
         transparent 50%,
-        rgba(255, 255, 255, .2) 50%,
-        rgba(255, 255, 255, .2) 75%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
         transparent 75%,
         transparent
       );
@@ -175,10 +178,13 @@
       border-bottom-right-radius: 8px;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
-      content: "";
+      content: '';
       overflow: hidden;
       position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
 
     @keyframes move {
@@ -253,7 +259,7 @@
           padding: 0 25px 0 5px;
           position: relative;
 
-          &+li {
+          & + li {
             border-top: 1px solid $light-grey;
           }
 
@@ -286,9 +292,7 @@
             margin-left: 10px;
           }
 
-          .chaptermark-href
-
-          .episode-link,
+          .chaptermark-href .episode-link,
           .playlist-episode-number {
             display: none;
           }
@@ -427,7 +431,7 @@
       border-radius: 3px;
       font-size: 14px;
       font-weight: bold;
-      letter-spacing: .8px;
+      letter-spacing: 0.8px;
       outline: none;
       padding: 4px 6px;
     }
@@ -461,7 +465,7 @@
       float: right;
       font-size: 14px;
       font-weight: bold;
-      letter-spacing: .8px;
+      letter-spacing: 0.8px;
       padding: 6px 6px;
       text-decoration: none;
     }

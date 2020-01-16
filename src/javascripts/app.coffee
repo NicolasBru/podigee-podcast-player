@@ -84,6 +84,7 @@ class PodigeePodcastPlayer
     @bindWindowResizing()
 
   switchEpisode: (episode, activeExtension) =>
+    console.log('switchEpisode')
     @episode = episode
     @theme.updateView()
 
@@ -121,6 +122,8 @@ class PodigeePodcastPlayer
     @player.media.currentTime = 0
     @extensions.ProgressBar.updateTime()
     @theme.removePlayingClass()
+    if @configuration.configuration.playerOptions?.readNext
+      @extensions.Playlist.playNext()
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
@@ -180,7 +183,7 @@ class PodigeePodcastPlayer
     @theme.removePanels()
     PodigeePodcastPlayer.defaultExtensions.forEach (extension) =>
       name = extension.extension.name
-      self.extensions[name] = new extension(self)
+      self.extensions[name] = new extension(self, @configuration)
       return if self.options.startPanels && self.options.startPanels.length
       if currentlyActiveExtension instanceof extension
         self.theme.togglePanel(self.extensions[name].panel)

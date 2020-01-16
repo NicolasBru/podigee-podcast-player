@@ -42,6 +42,7 @@ class ProgressBar extends Extension
     @updateTime()
 
   updateBarWidths: () =>
+    console.log('updateBarWidths')
     @updatePlayed()
     @updateLoaded()
 
@@ -54,6 +55,7 @@ class ProgressBar extends Extension
   updateTime: (time) =>
     return unless typeof time == 'number'
     currentTime = time || @media.currentTime
+    @duration = @buildTimeString(@player.duration)
     @timeLeft = @buildTimeString(@player.duration - currentTime)
     @timePlayed = @buildTimeString(currentTime)
 
@@ -72,7 +74,7 @@ class ProgressBar extends Extension
 
   updateLoaded: (buffered) =>
     return unless @media.seekable.length
-
+    # console.log('updateLoaded', @media.seekable)
     newWidth = @media.seekable.end(@media.seekable.length - 1) * @timeRailFactor()
     @loadedElement.css('margin-left', 0).width(newWidth)
 
@@ -83,7 +85,8 @@ class ProgressBar extends Extension
       timeLeft: @timeLeft,
       timePlayed: @timePlayed,
       timeCountdown: @timeMode == 'countdown',
-      timeCountup: @timeMode == 'countup'
+      timeCountup: @timeMode == 'countup',
+      duration: @duration
     }
 
   render: () ->
@@ -95,8 +98,8 @@ class ProgressBar extends Extension
   template: ->
     """
     <div class="progress-bar">
-      <button class="progress-bar-time-played time-remaining" pp-show="timeCountdown" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">-{ timeLeft }</button>
-      <button class="progress-bar-time-played time-played" pp-show="timeCountup" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">{ timePlayed }</button>
+      <button class="progress-bar-time-played time-remaining" pp-show="timeCountdown" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">-{ timeLeft } / { duration }</button>
+      <button class="progress-bar-time-played time-played" pp-show="timeCountup" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">{ timePlayed } / { duration }</button>
       <div class="progress-bar-rail">
         <span class="progress-bar-loaded"></span>
         <span class="progress-bar-buffering"></span>
@@ -117,6 +120,7 @@ class ProgressBar extends Extension
     @showBuffering()
 
   triggerPlaying: =>
+    @watchProgress()
     @updateLoaded()
     @hideBuffering()
 
@@ -141,18 +145,26 @@ class ProgressBar extends Extension
     $(@app.elem).on 'touchend', @handleLetgo
 
   bindEvents: () ->
+    console.log('bindEvents')
     @timeElements.on 'click', @switchTimeDisplay
+    $(@media).off('timeupdate', @updateTime).off('play', @triggerPlaying).off('waiting', @triggerLoading).off('loadeddata', @triggerLoaded)
 
     $(@media).on('timeupdate', @updateTime)
       .on('play', @triggerPlaying)
-      .on('playing', @triggerPlaying)
+      # .on('playing', @triggerPlaying)
       .on('waiting', @triggerLoading)
       .on('loadeddata', @triggerLoaded)
-      .on('progress', @updateLoaded)
+      # .on('progress', @updateLoaded)
 
     # drag&drop on time rail
     @elem.on 'mousedown', @handlePickup
     @elem.on 'touchstart', @handlePickup
+
+  watchProgress: () =>
+    @updateBarWidths()
+    if @player.playing
+      console.log('requestAnimationFrame')
+      window.requestAnimationFrame(@watchProgress)
 
   jumpToPosition: (position) =>
     if @player.duration
@@ -177,10 +189,14 @@ class ProgressBar extends Extension
   barWidth: => @railElement.width()
 
   timeRailFactor: =>
-    @barWidth()/@player.duration
+    @barWidth()/@media.duration
 
   updatePlayed: () =>
-    newWidth = (@media.currentTime || @player.currentTimeInSeconds) * @timeRailFactor()
+    console.log('updatePlayed')
+    console.log('@media.currentTime', @media.currentTime)
+    console.log('@media.duration', @media.duration)
+    newWidth = (@media.currentTime) * @timeRailFactor()
     @playedElement.width(newWidth)
+    console.log('newWidth', newWidth)
 
 module.exports = ProgressBar

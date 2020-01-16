@@ -13,7 +13,7 @@ class Playlist extends Extension
     name: 'Playlist'
     type: 'panel'
 
-  constructor: (@app) ->
+  constructor: (@app, @configuration) ->
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
@@ -23,11 +23,11 @@ class Playlist extends Extension
       @finishLoading()
     else
       @app.playlistLoader = new PlaylistLoader(@app)
-      @app.playlistLoader = new PlaylistLoader(@app)
+      # @app.playlistLoader = new PlaylistLoader(@app)
       @app.playlistLoader.loadEpisodes().done(@finishLoading)
 
   finishLoading: () =>
-    @episodes = @app.podcast.episodes
+    @episodes = _.clone(@app.podcast.episodes)
     @renderPanel()
     @renderButton()
 
@@ -53,7 +53,10 @@ class Playlist extends Extension
           cleanedCurrent == cleanedFile
         filteredMedia.length
     else
-      @currentEpisode = @playlist[0]
+      if @configuration.configuration.playerOptions?.first == 'earliest'
+        @currentEpisode = @playlist[@playlist.length - 1]
+      else
+        @currentEpisode = @playlist[0]
     if @currentEpisode
       @currentEpisode.activate()
       @setSkippingAvailability()

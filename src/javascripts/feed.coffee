@@ -1,4 +1,5 @@
 $ = require('jquery')
+Utils = require('./utils.coffee')
 
 AudioFile = require('./audio_file.coffee')
 
@@ -14,15 +15,15 @@ class FeedItem
     url: @_extract('link').html()
     media: @_mapEnclosure()
     description: @_cleanDescription(@_extract('description').html())
-    duration: parseInt(@_extract('duration').text(), 10)
+    duration: Utils.hhmmssToSeconds(@_extract('itunes\\:duration', 'duration').text())
     coverUrl: @_extract('image').attr('href') || @podcastCoverUrl
 
     number: null
     chaptermarks: null
     embedCode: null
 
-  _extract: (elemName) =>
-    @[elemName] ?= $(@xml).find(elemName)
+  _extract: (elemName, forceName) =>
+    @[forceName || elemName] ?= $(@xml).find(elemName)
 
   _findSubtitle: () ->
     @_extract('subtitle').html()
