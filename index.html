@@ -1,39 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="The Podigee Podcast Player is a HTML5 audio player specially crafted for listening to podcasts.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="description"
+      content="The Podigee Podcast Player is a HTML5 audio player specially crafted for listening to podcasts."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="example/normalize.css">
-    <link rel="stylesheet" href="example/styles.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="example/normalize.css" />
+    <link rel="stylesheet" href="example/styles.css" />
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   </head>
   <body>
     <!--[if lt IE 8]>
-      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
     <![endif]-->
 
     <div class="wrapper">
-      <img src="https://cdn.podigee.com/ppp/podigee-podcast-player.png" alt="The Podigee Podcast Player Logo" class="logo">
+      <img
+        src="https://cdn.podigee.com/ppp/podigee-podcast-player.png"
+        alt="The Podigee Podcast Player Logo"
+        class="logo"
+      />
 
-      <h1 class="page-title">A modern <em>web player</em>. For <em>podcasts</em>. From <em><a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a></em>.</h1>
+      <h1 class="page-title">
+        A modern <em>web player</em>. For <em>podcasts</em>. From
+        <em
+          ><a
+            href="https://www.podigee.com"
+            title="Podigee - The Podcast Publishing Platform"
+            >Podigee</a
+          ></em
+        >.
+      </h1>
 
       <p>
-        <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="../example/config.json"></script>
+        <script>
+          window.playerConfiguration = {
+            podcast: {
+              feed: '/samples/sounds.rss',
+            },
+            episode: {
+              media: {
+                mp3:
+                  'http://feeds.soundcloud.com/stream/737117782-laura-cardoso-644713044-ma-methode-pour-gagner-en-souplesse-40.mp3',
+              },
+              title: 'Title',
+              description: 'description',
+              coverUrl:
+                'http://i1.sndcdn.com/artworks-000663299569-ed2lh2-original.jpg',
+              //   chaptermarks: [
+              //     { start: '00:00:00.000', title: 'Start' },
+              //     { start: '00:10:00.000', title: '10mn' },
+              //     { start: '00:20:00.000', title: '20mn' },
+              //     { start: '00:25:00.000', title: '25mn' },
+              //   ],
+            },
+          };
+        </script>
+        <script
+          class="podigee-podcast-player"
+          src="build/javascripts/podigee-podcast-player.js"
+          data-configuration="playerConfiguration"
+        ></script>
       </p>
       <div>
         <div class="features icon-list">
           <div>
             <h3><i class="fa fa-html5"></i>HTML5 only</h3>
-            <p>&hellip; allows playback on all kinds of devices from Smartphone to Desktop.</p>
+            <p>
+              &hellip; allows playback on all kinds of devices from Smartphone
+              to Desktop.
+            </p>
           </div>
           <div>
             <h3><i class="fa fa-image"></i>Themeable</h3>
-            <p>&hellip; to show your own style or choose from premade themes.</p>
+            <p>
+              &hellip; to show your own style or choose from premade themes.
+            </p>
           </div>
           <div>
             <h3><i class="fa fa-puzzle-piece"></i>Extensible</h3>
@@ -41,7 +96,10 @@
           </div>
           <div>
             <h3><i class="fa fa-arrows-alt"></i>Responsive</h3>
-            <p>&hellip; making it look good on all screen sizes from small to large.</p>
+            <p>
+              &hellip; making it look good on all screen sizes from small to
+              large.
+            </p>
           </div>
         </div>
 
@@ -50,10 +108,15 @@
         <div class="extensions icon-list">
           <div>
             <h3><i class="fa fa-bookmark"></i>Chaptermarks</h3>
-            <p>&hellip; let the listener jump directly to a specific part of the episode.</p>
+            <p>
+              &hellip; let the listener jump directly to a specific part of the
+              episode.
+            </p>
           </div>
           <div>
-            <h3><i class="fa fa-chrome"></i>Chromecast <em>(experimental)</em></h3>
+            <h3>
+              <i class="fa fa-chrome"></i>Chromecast <em>(experimental)</em>
+            </h3>
             <p>&hellip; makes your podcast ready for the big screen.</p>
           </div>
           <div>
@@ -66,7 +129,9 @@
           </div>
           <div>
             <h3><i class="fa fa-list"></i>Playlist</h3>
-            <p>&hellip; lets the listener explore your podcast's back catalog.</p>
+            <p>
+              &hellip; lets the listener explore your podcast's back catalog.
+            </p>
           </div>
           <div>
             <h3><i class="fa fa-share-alt"></i>Sharing</h3>
@@ -78,7 +143,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </body>
 </html>
